@@ -1254,7 +1254,7 @@
         "type": "comment",
         "z": "8f260accf555091c",
         "name": "Click to start",
-        "info": "",
+        "info": "Click to start the promo alert chart",
         "x": 90,
         "y": 440,
         "wires": []
