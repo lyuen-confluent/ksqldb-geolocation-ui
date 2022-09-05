@@ -2,7 +2,16 @@
     "name": "ksqldb-geolocation-ui",
     "description": "A Node-RED Project",
     "version": "0.0.1",
-    "dependencies": {},
+    "dependencies": {
+        "node-red-node-ui-table": "0.4.3",
+        "node-red-node-random": "0.4.0",
+        "node-red-node-geohash": "0.1.10",
+        "node-red-dashboard": "3.1.7",
+        "node-red-contrib-web-worldmap": "2.29.0",
+        "node-red-contrib-random-item": "1.0.3",
+        "node-red-contrib-random-event-generator": "1.0.1",
+        "node-red-contrib-kafkajs": "0.0.7"
+    },
     "node-red": {
         "settings": {
             "flowFile": "flow.json",
