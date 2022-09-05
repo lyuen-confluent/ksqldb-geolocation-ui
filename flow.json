@@ -1,1 +1,1262 @@
-[]
+[
+    {
+        "id": "8f260accf555091c",
+        "type": "tab",
+        "label": "GeoLocation",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b5f2ce16d84d7dda",
+        "type": "subflow",
+        "name": "ksqlDB Query (HTTP)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "e159d9ff8487d2dd"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 880,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "65c5bdc03b765e84",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 870,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "5d7061fa7583cd96",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99",
+        "outputLabels": [
+            "resultset",
+            "header"
+        ],
+        "icon": "font-awesome/fa-database"
+    },
+    {
+        "id": "788f5c6dd1a16320",
+        "type": "subflow",
+        "name": "ksqlDB Query (CURL)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "3898f6d4db07e823"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1100,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "d4d52388ccd8cc6a",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1090,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "356406be7272df45",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 550,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "e515f7547a66e244",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 570,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "e515f7547a66e244",
+                        "port": 2
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99",
+        "outputLabels": [
+            "resultset",
+            "header",
+            "stderr",
+            "return code"
+        ],
+        "icon": "font-awesome/fa-database",
+        "status": {
+            "x": 500,
+            "y": 260,
+            "wires": [
+                {
+                    "id": "e515f7547a66e244",
+                    "port": 0
+                },
+                {
+                    "id": "e515f7547a66e244",
+                    "port": 2
+                }
+            ]
+        }
+    },
+    {
+        "id": "472a5e12dcdca5b6",
+        "type": "ui_group",
+        "name": "Geo Location",
+        "tab": "58c2aa06.ef46e4",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "800c148c15793939",
+        "type": "kafkajs-client",
+        "name": "cc_azure",
+        "brokers": "${ENV_CC_BOOTSTRAP}",
+        "clientid": "purchase-producer-001",
+        "connectiontimeout": "3000",
+        "requesttimeout": "25000",
+        "advancedretry": true,
+        "maxretrytime": "30000",
+        "initialretrytime": "300",
+        "factor": "0.2",
+        "multiplier": "2",
+        "retries": "5",
+        "auth": "sasl",
+        "tlsselfsign": false,
+        "tlscacert": "",
+        "tlsclientcert": "",
+        "tlsprivatekey": "",
+        "tlspassphrase": "",
+        "saslssl": true,
+        "saslmechanism": "plain",
+        "loglevel": "error"
+    },
+    {
+        "id": "58c2aa06.ef46e4",
+        "type": "ui_tab",
+        "name": "Geo Location",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e159d9ff8487d2dd",
+        "type": "http request",
+        "z": "b5f2ce16d84d7dda",
+        "name": "push query",
+        "method": "POST",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "914985e77a34180f"
+            ]
+        ]
+    },
+    {
+        "id": "914985e77a34180f",
+        "type": "split",
+        "z": "b5f2ce16d84d7dda",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "8be8d80ee67fd10c"
+            ]
+        ]
+    },
+    {
+        "id": "8be8d80ee67fd10c",
+        "type": "json",
+        "z": "b5f2ce16d84d7dda",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "48138b95fb585061"
+            ]
+        ]
+    },
+    {
+        "id": "48138b95fb585061",
+        "type": "switch",
+        "z": "b5f2ce16d84d7dda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "istype",
+                "v": "array",
+                "vt": "array"
+            },
+            {
+                "t": "istype",
+                "v": "object",
+                "vt": "object"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "65c5bdc03b765e84"
+            ],
+            [
+                "5d7061fa7583cd96"
+            ]
+        ]
+    },
+    {
+        "id": "65c5bdc03b765e84",
+        "type": "function",
+        "z": "b5f2ce16d84d7dda",
+        "name": "resultset",
+        "func": "var keys = flow.get(msg.queryName).columnNames;\nvar values = msg.payload\n\nmsg.payload = Object.fromEntries(keys.map((k, i) => [k, values[i]]));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5d7061fa7583cd96",
+        "type": "function",
+        "z": "b5f2ce16d84d7dda",
+        "name": "header",
+        "func": "//var queryName = msg.queryName;\nflow.set(msg.queryName, msg.payload)\n//return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e515f7547a66e244",
+        "type": "exec",
+        "z": "788f5c6dd1a16320",
+        "command": "curl --silent --no-buffer -X POST -d",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "push query",
+        "x": 390,
+        "y": 140,
+        "wires": [
+            [
+                "b15b4a670363428d"
+            ],
+            [],
+            []
+        ],
+        "icon": "font-awesome/fa-play"
+    },
+    {
+        "id": "b15b4a670363428d",
+        "type": "split",
+        "z": "788f5c6dd1a16320",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": true,
+        "addname": "",
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "2f730ea017a25435"
+            ]
+        ]
+    },
+    {
+        "id": "2f730ea017a25435",
+        "type": "json",
+        "z": "788f5c6dd1a16320",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 670,
+        "y": 80,
+        "wires": [
+            [
+                "7445c93ec6bc4df5"
+            ]
+        ]
+    },
+    {
+        "id": "7445c93ec6bc4df5",
+        "type": "switch",
+        "z": "788f5c6dd1a16320",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "istype",
+                "v": "array",
+                "vt": "array"
+            },
+            {
+                "t": "istype",
+                "v": "object",
+                "vt": "object"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 790,
+        "y": 80,
+        "wires": [
+            [
+                "d4d52388ccd8cc6a"
+            ],
+            [
+                "356406be7272df45"
+            ]
+        ]
+    },
+    {
+        "id": "3898f6d4db07e823",
+        "type": "change",
+        "z": "788f5c6dd1a16320",
+        "name": "query payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload & ' ' & msg.url",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "e515f7547a66e244"
+            ]
+        ]
+    },
+    {
+        "id": "d4d52388ccd8cc6a",
+        "type": "function",
+        "z": "788f5c6dd1a16320",
+        "name": "resultset",
+        "func": "var keys = flow.get(msg.queryName).columnNames;\nvar values = msg.payload\n\nmsg.payload = Object.fromEntries(keys.map((k, i) => [k, values[i]]));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "356406be7272df45",
+        "type": "function",
+        "z": "788f5c6dd1a16320",
+        "name": "header",
+        "func": "//var queryName = msg.queryName;\nflow.set(msg.queryName, msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "546661076e75c42a",
+        "type": "change",
+        "z": "788f5c6dd1a16320",
+        "name": "header",
+        "rules": [
+            {
+                "t": "set",
+                "p": "{{queryName}}",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 110,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "57e2ac81bd42fe3e",
+        "type": "comment",
+        "z": "788f5c6dd1a16320",
+        "name": "backup",
+        "info": "",
+        "x": 90,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ea59fb026ce150fb",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Stop",
+        "props": [
+            {
+                "p": "kill",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 520,
+        "wires": [
+            [
+                "e2a118974ab54323"
+            ]
+        ]
+    },
+    {
+        "id": "2ef89e787fed96f2",
+        "type": "ui_table",
+        "z": "8f260accf555091c",
+        "group": "472a5e12dcdca5b6",
+        "name": "",
+        "order": 2,
+        "width": "12",
+        "height": "12",
+        "columns": [
+            {
+                "field": "USER_ID",
+                "title": "ID",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "USER_GEOHASH",
+                "title": "GEOHASH",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "MERCHANT_DESCRIPTION",
+                "title": "MERCHANT",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "DISTANCE_METERS",
+                "title": "DISTANCE",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 1,
+        "cts": true,
+        "x": 990,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0baeb8520aeba944",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "clear",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 570,
+        "y": 520,
+        "wires": [
+            [
+                "2ef89e787fed96f2"
+            ]
+        ]
+    },
+    {
+        "id": "e2a118974ab54323",
+        "type": "subflow:788f5c6dd1a16320",
+        "z": "8f260accf555091c",
+        "name": "",
+        "x": 340,
+        "y": 480,
+        "wires": [
+            [
+                "c551b3e1ef6b6c89",
+                "cd0e2ff446929703"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "47da415e9b825275",
+        "type": "subflow:b5f2ce16d84d7dda",
+        "z": "8f260accf555091c",
+        "name": "",
+        "x": 340,
+        "y": 240,
+        "wires": [
+            [
+                "ed76c54f3468fd31"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cfc5aa1d9a2cc64f",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Merchants",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "queryName",
+                "v": "merchants",
+                "vt": "str"
+            },
+            {
+                "p": "url",
+                "v": "http://192.168.1.237:8088/query-stream",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sql\":\"select * from merchant_locations emit changes limit 3;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
+        "payloadType": "str",
+        "x": 130,
+        "y": 240,
+        "wires": [
+            [
+                "47da415e9b825275"
+            ]
+        ]
+    },
+    {
+        "id": "ed76c54f3468fd31",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "Prep Data for Map",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.DESCRIPTION",
+                "pt": "msg",
+                "to": "payload.name",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.LATITUDE",
+                "pt": "msg",
+                "to": "payload.lat",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.LONGITUDE",
+                "pt": "msg",
+                "to": "payload.lon",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 240,
+        "wires": [
+            [
+                "6d8654b70c0157ef"
+            ]
+        ]
+    },
+    {
+        "id": "c551b3e1ef6b6c89",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "Prep Data for Map",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.USER_ID",
+                "pt": "msg",
+                "to": "payload.name",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.GEOPOINT.LAT",
+                "pt": "msg",
+                "to": "payload.lat",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.GEOPOINT.LON",
+                "pt": "msg",
+                "to": "payload.lon",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 440,
+        "wires": [
+            [
+                "748152de09b86e07"
+            ]
+        ]
+    },
+    {
+        "id": "cd0e2ff446929703",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "Prep Data for Table",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"command\": \"addData\",\t    \"arguments\": [\t        [\t            payload\t        ],\t        true\t    ],\t    \"returnPromise\": false\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 480,
+        "wires": [
+            [
+                "2ef89e787fed96f2"
+            ]
+        ]
+    },
+    {
+        "id": "0eb535ce289e1b61",
+        "type": "template",
+        "z": "8f260accf555091c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{ \n    \"ID\": {{payload.ID}},\n    \"LATITUDE\": {{payload.lat}},\n    \"LONGITUDE\": {{payload.lon}},\n    \"GEOHASH\": \"{{payload.geohash}}\"\n}",
+        "output": "str",
+        "x": 760,
+        "y": 740,
+        "wires": [
+            [
+                "485857899256a567"
+            ]
+        ]
+    },
+    {
+        "id": "485857899256a567",
+        "type": "kafkajs-producer",
+        "z": "8f260accf555091c",
+        "name": "Topic: user-locations",
+        "client": "800c148c15793939",
+        "topic": "user-locations",
+        "advancedoptions": false,
+        "acknowledge": "all",
+        "partition": "",
+        "headeritems": {},
+        "key": "",
+        "responsetimeout": 30000,
+        "transactiontimeout": 60000,
+        "metadatamaxage": 300000,
+        "allowautotopiccreation": false,
+        "x": 940,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "9a9ab074bc1e21bd",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.lat",
+                "pt": "msg",
+                "to": "payload.lat/10000000",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 820,
+        "wires": [
+            [
+                "be253f4da17e89f4"
+            ]
+        ]
+    },
+    {
+        "id": "676008e5a67bcd57",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.lon",
+                "pt": "msg",
+                "to": "payload.lon/10000000",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 900,
+        "wires": [
+            [
+                "db7a7a6e3871891c"
+            ]
+        ]
+    },
+    {
+        "id": "6771c045aff572c1",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Emoji",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[\":boy:\",\":female-artist:\",\":female-astronaut:\",\":female-cook:\",\":female-doctor:\",\":female-factory-worker:\",\":female-farmer:\",\":female-firefighter:\",\":female-judge:\",\":female-mechanic:\",\":female-office-worker:\",\":female-pilot:\",\":female-scientist:\",\":female-singer:\",\":female-student:\",\":female-teacher:\",\":female-technologist:\",\":girl:\",\":male-artist:\",\":male-astronaut:\",\":male-cook:\",\":male-doctor:\",\":male-factory-worker:\",\":male-farmer:\",\":male-firefighter:\",\":male-judge:\",\":male-mechanic:\",\":male-office-worker:\",\":male-pilot:\",\":male-scientist:\",\":male-singer:\",\":male-student:\",\":male-teacher:\",\":male-technologist:\",\":man:\",\":woman:\"]",
+        "payloadType": "json",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "b0cb581ef8ec84b5"
+            ]
+        ]
+    },
+    {
+        "id": "b0cb581ef8ec84b5",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "Set Flow Variable",
+        "rules": [
+            {
+                "t": "set",
+                "p": "emoji",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8b2d15184c9bc3db",
+        "type": "ui_button",
+        "z": "8f260accf555091c",
+        "name": "",
+        "group": "472a5e12dcdca5b6",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Start",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "start",
+        "payloadType": "str",
+        "topic": "control",
+        "topicType": "str",
+        "x": 90,
+        "y": 720,
+        "wires": [
+            [
+                "1dafa58b18160fc2"
+            ]
+        ]
+    },
+    {
+        "id": "47b06f9c0b371d02",
+        "type": "ui_button",
+        "z": "8f260accf555091c",
+        "name": "",
+        "group": "472a5e12dcdca5b6",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Stop",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "stop",
+        "payloadType": "str",
+        "topic": "control",
+        "topicType": "str",
+        "x": 90,
+        "y": 760,
+        "wires": [
+            [
+                "1dafa58b18160fc2"
+            ]
+        ]
+    },
+    {
+        "id": "1fcbb74a4de879ab",
+        "type": "function",
+        "z": "8f260accf555091c",
+        "name": "table paramter",
+        "func": "msg.ui_control = { tabulator: {} };\n\n//workaround that buttos can`t deliver empty strings\nif (msg.payload.hasOwnProperty('payload')) {\n    msg.payload = msg.payload.payload;\n}\n\nmsg.ui_control.tabulator[msg.topic] = msg.payload;\ndelete msg.topic;\nmsg.payload = null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 560,
+        "wires": [
+            [
+                "2ef89e787fed96f2"
+            ]
+        ]
+    },
+    {
+        "id": "206c2688e82b95dc",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Set \"USER_ID\" as Index",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "index",
+        "payload": "USER_ID",
+        "payloadType": "str",
+        "x": 630,
+        "y": 560,
+        "wires": [
+            [
+                "1fcbb74a4de879ab"
+            ]
+        ]
+    },
+    {
+        "id": "7641a63f2bedb873",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Promo Alerts",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "http://192.168.1.237:8088/query-stream",
+                "vt": "str"
+            },
+            {
+                "p": "queryName",
+                "v": "promoAlerts",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "{\"sql\":\"SELECT * FROM promo_alerts EMIT CHANGES;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"latest\"}}",
+        "payloadType": "str",
+        "x": 130,
+        "y": 480,
+        "wires": [
+            [
+                "e2a118974ab54323"
+            ]
+        ]
+    },
+    {
+        "id": "a134cd3eb1d18927",
+        "type": "comment",
+        "z": "8f260accf555091c",
+        "name": "Show Merchants on Map",
+        "info": "",
+        "x": 150,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7e53a835a8612b6b",
+        "type": "comment",
+        "z": "8f260accf555091c",
+        "name": "Show Promo Alert on Map and Table",
+        "info": "",
+        "x": 340,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4c416202a83e0f53",
+        "type": "comment",
+        "z": "8f260accf555091c",
+        "name": "Initialize Emoji",
+        "info": "",
+        "x": 110,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "f2a0e543a48d881e",
+        "type": "comment",
+        "z": "8f260accf555091c",
+        "name": "Simulate Customer Locations",
+        "info": "",
+        "x": 160,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "6d8654b70c0157ef",
+        "type": "ui_worldmap",
+        "z": "8f260accf555091c",
+        "group": "472a5e12dcdca5b6",
+        "order": 1,
+        "width": "12",
+        "height": "12",
+        "name": "",
+        "lat": "22.33426758116786",
+        "lon": "114.19721193291434",
+        "zoom": "16",
+        "layer": "EsriT",
+        "cluster": "",
+        "maxage": "6000",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "overlist": "",
+        "maplist": "OSMG,OSMC,EsriC,EsriS,EsriT,EsriDG,UKOS",
+        "mapname": "",
+        "mapurl": "",
+        "mapopt": "",
+        "mapwms": false,
+        "x": 1000,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "748152de09b86e07",
+        "type": "random-item",
+        "z": "8f260accf555091c",
+        "name": "Random Emoji",
+        "input": "emoji",
+        "inputType": "flow",
+        "output": "payload.icon",
+        "outputType": "msg",
+        "number": 1,
+        "x": 800,
+        "y": 440,
+        "wires": [
+            [
+                "6d8654b70c0157ef"
+            ]
+        ]
+    },
+    {
+        "id": "1dafa58b18160fc2",
+        "type": "event",
+        "z": "8f260accf555091c",
+        "name": "",
+        "controlTopic": "control",
+        "startCmd": "start",
+        "stopCmd": "stop",
+        "distribution": "exponential",
+        "expMeanInterval": "1",
+        "minInterval": 1,
+        "maxInterval": 2,
+        "gaussMeanInterval": 1,
+        "stdDev": 1,
+        "outputTopic": "event",
+        "outputPayload": "{}",
+        "outputPayloadType": "json",
+        "maxEventCount": "100",
+        "x": 230,
+        "y": 740,
+        "wires": [
+            [
+                "a6e5efc8c6767619"
+            ]
+        ]
+    },
+    {
+        "id": "168ea421ba5f04eb",
+        "type": "random",
+        "z": "8f260accf555091c",
+        "name": "Random Latitude",
+        "low": "223314758",
+        "high": "223406987",
+        "inte": "true",
+        "property": "payload.lat",
+        "x": 430,
+        "y": 780,
+        "wires": [
+            [
+                "9a9ab074bc1e21bd"
+            ]
+        ]
+    },
+    {
+        "id": "be253f4da17e89f4",
+        "type": "random",
+        "z": "8f260accf555091c",
+        "name": "Random Longtitude",
+        "low": "1141945552",
+        "high": "1142022484",
+        "inte": "true",
+        "property": "payload.lon",
+        "x": 480,
+        "y": 860,
+        "wires": [
+            [
+                "676008e5a67bcd57"
+            ]
+        ]
+    },
+    {
+        "id": "a6e5efc8c6767619",
+        "type": "random",
+        "z": "8f260accf555091c",
+        "name": "Random ID",
+        "low": 1,
+        "high": "100",
+        "inte": "true",
+        "property": "payload.ID",
+        "x": 390,
+        "y": 740,
+        "wires": [
+            [
+                "168ea421ba5f04eb"
+            ]
+        ]
+    },
+    {
+        "id": "db7a7a6e3871891c",
+        "type": "geohash",
+        "z": "8f260accf555091c",
+        "name": "",
+        "property": "payload",
+        "x": 620,
+        "y": 740,
+        "wires": [
+            [
+                "0eb535ce289e1b61"
+            ]
+        ]
+    },
+    {
+        "id": "ac2c99acc2744629",
+        "type": "comment",
+        "z": "8f260accf555091c",
+        "name": "Click to start",
+        "info": "",
+        "x": 90,
+        "y": 440,
+        "wires": []
+    }
+]
