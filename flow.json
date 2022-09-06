@@ -296,7 +296,7 @@
         "type": "function",
         "z": "b5f2ce16d84d7dda",
         "name": "header",
-        "func": "//var queryName = msg.queryName;\nflow.set(msg.queryName, msg.payload)\n//return msg;",
+        "func": "//var queryName = msg.queryName;\nflow.set(msg.queryName, msg.payload)\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
