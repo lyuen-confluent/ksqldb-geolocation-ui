@@ -526,9 +526,9 @@
         "z": "8f260accf555091c",
         "group": "472a5e12dcdca5b6",
         "name": "",
-        "order": 2,
+        "order": 3,
         "width": "12",
-        "height": "12",
+        "height": "10",
         "columns": [
             {
                 "field": "USER_ID",
@@ -651,7 +651,7 @@
             },
             {
                 "p": "url",
-                "v": "http://192.168.1.237:8088/query-stream",
+                "v": "http://ksqldb-server:8088/query-stream",
                 "vt": "str"
             }
         ],
@@ -791,7 +791,7 @@
         "template": "{ \n    \"ID\": {{payload.ID}},\n    \"LATITUDE\": {{payload.lat}},\n    \"LONGITUDE\": {{payload.lon}},\n    \"GEOHASH\": \"{{payload.geohash}}\"\n}",
         "output": "str",
         "x": 780,
-        "y": 740,
+        "y": 900,
         "wires": [
             [
                 "485857899256a567"
@@ -815,7 +815,7 @@
         "metadatamaxage": 300000,
         "allowautotopiccreation": false,
         "x": 960,
-        "y": 740,
+        "y": 900,
         "wires": []
     },
     {
@@ -838,7 +838,7 @@
         "to": "",
         "reg": false,
         "x": 470,
-        "y": 820,
+        "y": 980,
         "wires": [
             [
                 "be253f4da17e89f4"
@@ -865,7 +865,7 @@
         "to": "",
         "reg": false,
         "x": 520,
-        "y": 900,
+        "y": 1060,
         "wires": [
             [
                 "db7a7a6e3871891c"
@@ -932,7 +932,7 @@
         "z": "8f260accf555091c",
         "name": "",
         "group": "472a5e12dcdca5b6",
-        "order": 3,
+        "order": 4,
         "width": "2",
         "height": "1",
         "passthru": false,
@@ -947,7 +947,7 @@
         "topic": "control",
         "topicType": "str",
         "x": 110,
-        "y": 720,
+        "y": 880,
         "wires": [
             [
                 "1dafa58b18160fc2"
@@ -960,7 +960,7 @@
         "z": "8f260accf555091c",
         "name": "",
         "group": "472a5e12dcdca5b6",
-        "order": 4,
+        "order": 5,
         "width": "2",
         "height": "1",
         "passthru": false,
@@ -975,7 +975,7 @@
         "topic": "control",
         "topicType": "str",
         "x": 110,
-        "y": 760,
+        "y": 920,
         "wires": [
             [
                 "1dafa58b18160fc2"
@@ -1041,7 +1041,7 @@
             },
             {
                 "p": "url",
-                "v": "http://192.168.1.237:8088/query-stream",
+                "v": "http://ksqldb-server:8088/query-stream",
                 "vt": "str"
             },
             {
@@ -1102,7 +1102,7 @@
         "name": "Simulate Customer Locations",
         "info": "",
         "x": 180,
-        "y": 680,
+        "y": 840,
         "wires": []
     },
     {
@@ -1177,7 +1177,7 @@
         "outputPayloadType": "json",
         "maxEventCount": "100",
         "x": 250,
-        "y": 740,
+        "y": 900,
         "wires": [
             [
                 "a6e5efc8c6767619"
@@ -1194,7 +1194,7 @@
         "inte": "true",
         "property": "payload.lat",
         "x": 450,
-        "y": 780,
+        "y": 940,
         "wires": [
             [
                 "9a9ab074bc1e21bd"
@@ -1211,7 +1211,7 @@
         "inte": "true",
         "property": "payload.lon",
         "x": 500,
-        "y": 860,
+        "y": 1020,
         "wires": [
             [
                 "676008e5a67bcd57"
@@ -1228,7 +1228,7 @@
         "inte": "true",
         "property": "payload.ID",
         "x": 410,
-        "y": 740,
+        "y": 900,
         "wires": [
             [
                 "168ea421ba5f04eb"
@@ -1242,7 +1242,7 @@
         "name": "",
         "property": "payload",
         "x": 640,
-        "y": 740,
+        "y": 900,
         "wires": [
             [
                 "0eb535ce289e1b61"
@@ -1257,6 +1257,195 @@
         "info": "Click to start the promo alert chart",
         "x": 70,
         "y": 440,
+        "wires": []
+    },
+    {
+        "id": "29fea3299ae4aecb",
+        "type": "subflow:788f5c6dd1a16320",
+        "z": "8f260accf555091c",
+        "name": "",
+        "x": 400,
+        "y": 720,
+        "wires": [
+            [
+                "86b9b7f4704e76b0"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7d713f2b8ca0cd18",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Promo Alerts Count",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "http://ksqldb-server:8088/query-stream",
+                "vt": "str"
+            },
+            {
+                "p": "queryName",
+                "v": "promoAlertsCount",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "{\"sql\":\"SELECT count(USER_ID) as OFFER_COUNT, MERCHANT_DESCRIPTION FROM PROMO_ALERTS group by MERCHANT_DESCRIPTION EMIT CHANGES;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
+        "payloadType": "str",
+        "x": 170,
+        "y": 700,
+        "wires": [
+            [
+                "29fea3299ae4aecb"
+            ]
+        ]
+    },
+    {
+        "id": "effcffcb202c6571",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "Stop",
+        "props": [
+            {
+                "p": "kill",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 130,
+        "y": 740,
+        "wires": [
+            [
+                "29fea3299ae4aecb"
+            ]
+        ]
+    },
+    {
+        "id": "60f0c47730dbc5ab",
+        "type": "ui_chart",
+        "z": "8f260accf555091c",
+        "name": "",
+        "group": "472a5e12dcdca5b6",
+        "order": 2,
+        "width": "12",
+        "height": "6",
+        "label": "Promotion Count by Merchant",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 890,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "86b9b7f4704e76b0",
+        "type": "change",
+        "z": "8f260accf555091c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "label",
+                "pt": "msg",
+                "to": "payload.MERCHANT_DESCRIPTION",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.OFFER_COUNT",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 700,
+        "wires": [
+            [
+                "60f0c47730dbc5ab"
+            ]
+        ]
+    },
+    {
+        "id": "1e01d094154d19d1",
+        "type": "inject",
+        "z": "8f260accf555091c",
+        "name": "clear",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 630,
+        "y": 740,
+        "wires": [
+            [
+                "60f0c47730dbc5ab"
+            ]
+        ]
+    },
+    {
+        "id": "6a38179ca3e088e0",
+        "type": "comment",
+        "z": "8f260accf555091c",
+        "name": "Click to start",
+        "info": "Click to start the promo alert chart",
+        "x": 70,
+        "y": 660,
         "wires": []
     }
 ]
